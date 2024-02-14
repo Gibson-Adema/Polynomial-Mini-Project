@@ -18,11 +18,13 @@ choice = keyboard.nextLine();
 
 
 if(choice.equals("C")){
-myPolys[totPoly] = Polynomial.input();
-System.out.print(myPolys[totPoly].getName() + "(x) = ");
-myPolys[totPoly].getPolyString(myPolys[totPoly].getDegree());
-totPoly += 1;
-System.out.println("");}
+try{myPolys[totPoly] = Polynomial.input();
+    System.out.print(myPolys[totPoly].getName() + "(x) = ");
+    myPolys[totPoly].getPolyString(myPolys[totPoly].getDegree());
+    totPoly += 1;
+    System.out.println("");}
+catch(Exception e){System.out.println(e.getMessage());}
+}
 
 else if(choice.equals("A")){
 System.out.print("What two polynomials do you want to add?");
@@ -51,6 +53,8 @@ System.out.println(" ");
 
 else if(choice.equals("M")){
 
+myPolys[0].multiplication(myPolys[0]);
+
 }
 
 else if(choice.equals("D")){
@@ -68,10 +72,24 @@ System.out.println(" ");
 }
 
 else if(choice.equals("E")){
+    System.out.print("Evaluate which Polynomial at which integer?");
+    String polyAndIntStr = keyboard.nextLine();
+String[] polyAndInt = polyAndIntStr.split(" ");
+int evalNum = Integer.parseInt(polyAndInt[1]);
+Polynomial evalPoly = null;
+for(int i = 0; i < totPoly; i++){
+    if(myPolys[i].getName().equals(polyAndInt[0])){
+    evalPoly = myPolys[i];}}
 
+evalPoly.Evaluate(evalNum, evalPoly.getDegree());
+System.out.println(" ");
 }
 
-else{}}
+else if(choice.equals("Q")){
+    System.out.print("Goodbye");
+}
+
+else{System.out.println("Invalid Input");}}
 }
 
 
@@ -85,9 +103,7 @@ else{}}
 public static void main(String[] args) {
 
 PolyCalc driver = new PolyCalc();
-int[] coef = {2,3};
-Polynomial p12 = new Polynomial("p", 1, coef);
-p12.multiplication(coef, coef);
+driver.page();
  
     }
 
