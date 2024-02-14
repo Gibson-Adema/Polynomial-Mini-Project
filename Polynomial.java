@@ -17,7 +17,7 @@ public class Polynomial {
     }
     
     
-public static Polynomial input(){
+public static Polynomial input() throws Exception{
 Scanner keyboard = new Scanner(System.in);
 System.out.print("Enter Polynomial(name, degree, coefficients)");
 String total = keyboard.nextLine(); 
@@ -29,6 +29,9 @@ int j = 0;
 for(int i = 2; i < totals.length; i++){
 coefficients[j] = Integer.parseInt(totals[i]);
 j++;}
+if(coefficients.length != degree + 1){
+    throw new Exception("Invalid Input");
+}
 
 return new Polynomial(polyName, degree, coefficients);
 }
@@ -174,28 +177,42 @@ diffunct(degree);
 }
 
 
-public void multiplication(int[] array1,int[] array2) {
-    int[] arrfin =  new int[10];
-    int i=0;
-    int product;
-    while (array1[0] >= i) {
+
+ public void multiplication(Polynomial Poly2) {
+    int[] Poly1 = getCoefficients();
+    int newDegree = getDegree() + Poly2.getDegree();
+        int[] resultPoly = new int[getDegree() + Poly2.getDegree() + 1];
         
-        for(int n=0; n < array2[0]; n++) {
-            product = array1[i] * array2[n];
-            if (i+n == 2) {arrfin[0] += product;}
-            else if (i+n == 3) {arrfin[1] += product;}
-            else if (i+n == 4) {arrfin[2] += product;}
-            else if (i+n == 5) {arrfin[3] += product;}
-            else if (i+n == 6) {arrfin[4] += product;}
-            else if (i+n == 7) {arrfin[5] += product;}
-            else if (i+n == 8) {arrfin[6] += product;}
-            else if (i+n == 9) {arrfin[7] += product;}
-            else if (i+n == 10) {arrfin[8] += product;}
+        for (int n = getDegree(); n > 2; n--) {
+            for (int i = Poly2.getCoefficients().length; i > 2; i--) {
+                resultPoly[n + i - 3] += Poly1[n] * Poly2.getCoefficients()[i];
+            }
         }
-        i++;
+
+        System.out.print(resultPoly.length);
+        for(int i = 0; i < resultPoly.length; i++){
+            int degree1 = resultPoly.length;
+            System.out.print(resultPoly[i] + "x^" + (degree1 - i));
+        }
+    }
+private void Evaluatefunc(int evalNum, int degree){
+    
+    int answer = 0;
+    for(int coef : coefficients){
+answer += coef*(Math.pow(evalNum, degree));
+degree -= 1;
     }
 
+System.out.print(answer);}
+
+public void Evaluate(int evalNum, int degree){
+    getPolyString(degree);
+    System.out.print(" = ");
+    Evaluatefunc(evalNum, degree);
+}
 
 
-}}
+}
+
+
 
